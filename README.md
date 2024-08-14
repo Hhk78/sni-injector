@@ -1,23 +1,13 @@
 ```
-#!/bin/bash
 
-# 1. Özel Anahtar (Private Key) Oluşturma
 openssl genpkey -algorithm RSA -out api.whatsapp.com.key -aes256 -pass pass:parolaniz
 
-# 2. Sertifika İmzalama İsteği (CSR) Oluşturma
 openssl req -new -key api.whatsapp.com.key -out api.whatsapp.com.csr -passin pass:parolaniz -subj "/C=TR/ST=YourState/L=YourCity/O=YourOrganization/OU=YourUnit/CN=api.whatsapp.com"
 
-# 3. Kendi Kendine İmzalanmış Sertifika Oluşturma
 openssl x509 -req -days 365 -in api.whatsapp.com.csr -signkey api.whatsapp.com.key -out api.whatsapp.com.crt -passin pass:parolaniz
 
-# 4. (Opsiyonel) PEM Formatında Birleşik Sertifika Dosyası
 cat api.whatsapp.com.crt api.whatsapp.com.key > api.whatsapp.com.pem
 
-echo "Sertifika ve özel anahtar başarıyla oluşturuldu:"
-echo " - Özel Anahtar: api.whatsapp.com.key"
-echo " - CSR: api.whatsapp.com.csr"
-echo " - Sertifika: api.whatsapp.com.crt"
-echo " - PEM Dosyası: api.whatsapp.com.pem (opsiyonel)"
 ```
 ```
 pid = /var/run/stunnel.pid
